@@ -41,8 +41,24 @@ export interface IEntityLogGroupedByIdDTO {
 	entity_id: string;
 	logs: IEntityLogRecordDTO[];
 }
+
 export interface IEntityLogGroupedByIdEntryDTO {
 	entity: ENTITIES;
 	entity_id: string;
+	logs: IEntityLogRecordDTO[];
+}
+
+export interface IEntityLogsGroupedByIdAndTypeDTO {
+	id: string;
+	entity: ENTITIES;
+	entity_id: string;
+	type: LOG_TYPE;
+	logs: IEntityLogRecordDTO[];
+}
+
+export interface IEntityLogsGroupedByIdAndTypeEntryDTO {
+	entity: ENTITIES;
+	entity_id: string;
+	type: LOG_TYPE;
 	logs: IEntityLogRecordDTO[];
 }
