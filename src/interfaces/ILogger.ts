@@ -34,3 +34,15 @@ export interface IEntityLogRecordEntryDTO {
 	datetime: Date;
 	objectData?: object;
 }
+
+export interface IEntityLogGroupedByIdDTO {
+	id: string;
+	entity: ENTITIES;
+	entity_id: string;
+	logs: IEntityLogRecordDTO[];
+}
+export interface IEntityLogGroupedByIdEntryDTO {
+	entity: ENTITIES;
+	entity_id: string;
+	logs: IEntityLogRecordDTO[];
+}

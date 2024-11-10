@@ -26,6 +26,25 @@ class App {
 		this.database()
 			.then(() => this.declareExchange(QUEUES))
 			.then(() => this.consumeQueue(QUEUES));
+
+		console.log(
+			JSON.stringify({
+				entity: "users",
+				entityId: "1",
+				trace_id: "123",
+				type: "error",
+				statusCode: 400,
+				title: "User already exists with this CPF",
+				description: "Send a new request to register a new user With the same CPF already exists",
+				datetime: "2023-02-01T00:00:00.000Z",
+				objectData: {
+					cpf: "123",
+					name: "John Doe",
+					email: "2n9V4@example.com",
+					password: "123456",
+				},
+			}),
+		);
 	}
 
 	private middlewarePreRoute() {
@@ -61,7 +80,8 @@ class App {
 		for (const { queue } of consumeData) {
 			await server.consume(queue, async (message: Message) => {
 				const content = JSON.parse(message.content.toString());
-				await EntityLogRecordService.saveEntityLog(content);
+				const entityLog = await EntityLogRecordService.saveEntityLog(content);
+				if (entityLog) console.log("EntityLogRecord created: ", entityLog);
 			});
 		}
 	}

@@ -1,9 +1,10 @@
-import { IEntityLogRecordEntryDTO, IEntityLogRecordMappedDTO } from "../../interfaces/ILogger.ts";
+import { IEntityLogGroupedByIdEntryDTO, IEntityLogRecordDTO, IEntityLogRecordEntryDTO, IEntityLogRecordMappedDTO } from "../../interfaces/ILogger.ts";
 import { EntityLogRecordModel } from "../../model/EntityLogRecord.ts";
+import { EntityLogGroupedByIdModel } from "../../model/EntityLogsGroupedById.ts";
 import { EntityLogRecordValidate } from "./EntityLogRecordValidate.ts";
 
 class EntityLogRecordService {
-	public static async saveEntityLog(logData: IEntityLogRecordEntryDTO) {
+	public static async saveEntityLog(logData: IEntityLogRecordEntryDTO): Promise<IEntityLogRecordDTO | void> {
 		// Validar dados com o yup
 		const { isValid, error } = await EntityLogRecordValidate.saveEntityLog(logData);
 		if (!isValid) {
@@ -22,7 +23,26 @@ class EntityLogRecordService {
 			objectData: logData.objectData,
 		};
 
-		await EntityLogRecordModel.create(entityLogMapped);
+		// Finalizando Fluxo de Logs Individuais
+		const entityLog = await EntityLogRecordModel.create(entityLogMapped);
+
+		const entityLogsGroupedById = await EntityLogGroupedByIdModel.findOne({ entity: logData.entity, entity_id: logData.entityId }).lean();
+		if (entityLogsGroupedById) {
+			const entityLogs = entityLogsGroupedById.logs;
+			entityLogs.push(entityLog);
+
+			await EntityLogGroupedByIdModel.updateOne({ entity: logData.entity, entity_id: logData.entityId }, { $set: { logs: entityLogs } });
+		} else {
+			const entityLogsGroupedById: IEntityLogGroupedByIdEntryDTO = {
+				entity: logData.entity,
+				entity_id: logData.entityId,
+				logs: [entityLog],
+			};
+
+			await EntityLogGroupedByIdModel.create(entityLogsGroupedById);
+		}
+
+		return entityLog;
 	}
 }
 
