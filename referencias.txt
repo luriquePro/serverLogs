@@ -1,0 +1,105 @@
+
+// Feito pra buscas complexas de uma entidade com id especifico (Ex: Todos os logs do usuario 1, que ocorreram das 16hrs até as 21hrs do dia atual)
+const loggerData = {
+	entity: "users",
+	entityId: "1",
+	trace_id: "123",
+	type: "error",
+	statusCode: 400,
+	title: "User already exists with this CPF",
+	description: "Send a new request to register a new user With the same CPF already exists",
+	datetime: "2023-02-01T00:00:00.000Z",
+	objectData: {
+		cpf: "123",
+		name: "John Doe",
+		email: "2n9V4@example.com",
+		password: "123456",
+	},
+};
+
+// Feito para busca simples quando quer todos os logs de um usuario em especifico
+const loggerDataGroupedByEntity = {
+	entity: "users",
+	entityId: "1",
+	logs: [
+		{
+			trace_id: "123",
+			type: "error",
+			statusCode: 400,
+			title: "User already exists with this CPF",
+			description: "Send a new request to register a new user With the same CPF already exists",
+			datetime: "2023-02-01T00:00:00.000Z",
+			objectData: {
+				cpf: "123",
+				name: "John Doe",
+				email: "2n9V4@example.com",
+				password: "123456",
+			},
+		},
+		{
+			trace_id: "123",
+			type: "error",
+			statusCode: 400,
+			title: "User already exists with this CPF",
+			description: "Send a new request to register a new user With the same CPF already exists",
+			datetime: "2023-02-01T00:00:00.000Z",
+			objectData: {
+				cpf: "123",
+				name: "John Doe",
+				email: "2n9V4@example.com",
+				password: "123456",
+			},
+		},
+	],
+};
+
+// Feito para buscas mais simples de uma entidade e um type especifico (Ex: Quero todos os logs de erro que o usuario de id 1 teve)
+const loggerDataGroupedByTypeAndEntityId = {
+	entity: "users",
+	entityId: "1",
+	type: "error",
+	logs: [
+		{
+			trace_id: "123",
+			type: "error",
+			statusCode: 400,
+			title: "User already exists with this CPF",
+			description: "Send a new request to register a new user With the same CPF already exists",
+			datetime: "2023-02-01T00:00:00.000Z",
+			objectData: {
+				cpf: "123",
+				name: "John Doe",
+				email: "2n9V4@example.com",
+				password: "123456",
+			},
+		},
+		{
+			trace_id: "123",
+			type: "error",
+			statusCode: 400,
+			title: "User already exists with this CPF",
+			description: "Send a new request to register a new user With the same CPF already exists",
+			datetime: "2023-02-01T00:00:00.000Z",
+			objectData: {
+				cpf: "123",
+				name: "John Doe",
+				email: "2n9V4@example.com",
+				password: "123456",
+			},
+		},
+	],
+};
+
+// Modelo de usuarios Logados (Feito pra buscar complexas)
+
+/*
+trace_id unique uuid
+entity enum
+entityId string
+type enum
+statusCode number
+title string
+description string
+datetime datetime
+objectData mixed
+*/
