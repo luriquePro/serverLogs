@@ -1,5 +1,8 @@
 export enum ENTITIES_ENUM {
 	"USERS" = "users",
+	"CONFIGURES" = "configures",
+	"INDEX" = "index",
+	"JEST" = "jest",
 }
 
 export enum LOG_TYPE_ENUM {

@@ -6,7 +6,18 @@ export interface IEntityLogRecordDTO {
 	entity: ENTITIES;
 	entity_id: string;
 	type: LOG_TYPE;
-	statusCode: number;
+	status_code: number;
+	title: string;
+	description: string;
+	datetime: Date;
+	objectData?: object;
+}
+
+export interface IEntityLogRecordMappedDTO {
+	entity: ENTITIES;
+	entity_id: string;
+	type: LOG_TYPE;
+	status_code: number;
 	title: string;
 	description: string;
 	datetime: Date;
@@ -15,7 +26,7 @@ export interface IEntityLogRecordDTO {
 
 export interface IEntityLogRecordEntryDTO {
 	entity: ENTITIES;
-	entity_id: string;
+	entityId: string;
 	type: LOG_TYPE;
 	statusCode: number;
 	title: string;

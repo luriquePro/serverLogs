@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import { QUEUES } from "./constants/QUEUES.ts";
 import { IRMQPConsumQueue, IRMQPDeclareExchange } from "./interfaces/RMQPInterface.ts";
 import { RMQPProvider } from "./providers/RMQPProvider.ts";
+import { EntityLogRecordService } from "./usecases/EntityLogRecord/EntityLogRecordService.ts";
 
 class App {
 	public express: Application;
@@ -60,7 +61,7 @@ class App {
 		for (const { queue } of consumeData) {
 			await server.consume(queue, async (message: Message) => {
 				const content = JSON.parse(message.content.toString());
-				console.log(content);
+				await EntityLogRecordService.saveEntityLog(content);
 			});
 		}
 	}

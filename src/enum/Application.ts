@@ -1,4 +1,4 @@
-export enum HTTTP_STATUS_CODE_ENUM {
+export enum HTTP_STATUS_CODE_ENUM {
 	// 1xx Informational
 	Continue = 100,
 	SwitchingProtocols = 101,
